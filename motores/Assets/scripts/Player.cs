@@ -6,47 +6,42 @@ public class Player : MonoBehaviour
 {
 
     [SerializeField] private float UpForce;
+    [SerializeField] private float speed = 3f;
 
-
-    public Vector3 starposition;
-    public float speed;
-    private Rigidbody player;
-    // Start is called before the first frame update
+    
+    
+   
+    private Rigidbody playerRb;
+    
     void Start()
     {
-        transform.position = starposition;
 
-        player = GetComponent<Rigidbody>();
+
+        playerRb = GetComponent<Rigidbody>();
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-speed * Time.deltaTime, 0f, 0f);
-        }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(speed * Time.deltaTime, 0f, 0f);
-        }
+        float horizontalInput = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float verticalInput = Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(0f, 0f, speed * Time.deltaTime);
-        }
+        transform.Translate( horizontalInput, 0f, verticalInput);
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0f, 0f, -speed * Time.deltaTime);
-        }
+        Input.GetAxis("Horizontal");
+        Input.GetAxis("Vertical");
+        
+
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            player.AddForce(Vector3.up * UpForce);
+            playerRb.AddForce(Vector3.up * UpForce);
         }
        
     }
+
+    
+
 }
