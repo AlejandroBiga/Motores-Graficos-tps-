@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -8,11 +9,12 @@ public class Player : MonoBehaviour
     [SerializeField] private float UpForce;
     [SerializeField] private float speed = 3f;
 
+
+    public int ItemsCollected;
     
-    
-   
     private Rigidbody playerRb;
-    
+
+    public Text score;
     void Start()
     {
 
@@ -42,6 +44,17 @@ public class Player : MonoBehaviour
        
     }
 
-    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("item"))
+        {
+            Destroy(collision.gameObject);
+
+            // ++ = ItemsCollected = itemsCollected + 1
+            ItemsCollected++;
+
+            score.text = ItemsCollected.ToString();
+        }
+    }
 
 }
