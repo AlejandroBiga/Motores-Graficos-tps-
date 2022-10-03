@@ -10,17 +10,25 @@ public class Player : MonoBehaviour
     [SerializeField] private float speed = 3f;
 
 
-    public int ItemsCollected;
+   
     
     private Rigidbody playerRb;
 
     public Text score;
-    void Start()
+    public Text winText;
+    public int totalItems;
+    public int ItemsCollected;
+
+    private void Start()
     {
 
 
         playerRb = GetComponent<Rigidbody>();
-        
+
+        totalItems = GameObject.FindGameObjectsWithTag("item").Length;
+        winText.enabled = false;
+        UpdateUI();
+
     }
 
     
@@ -49,12 +57,21 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("item"))
         {
             Destroy(collision.gameObject);
+            ItemsCollected++; // le sumo uno
+            UpdateUI();
 
-            // ++ = ItemsCollected = itemsCollected + 1
-            ItemsCollected++;
+            if (ItemsCollected == totalItems)
+            {
 
-            score.text = ItemsCollected.ToString();
+                
+                winText.enabled = true;
+            }
         }
+    }
+
+    private void UpdateUI()
+    {
+        score.text = ItemsCollected.ToString() + " / " + totalItems.ToString();
     }
 
 }
